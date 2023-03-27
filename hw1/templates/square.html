@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Grid World</title>
+    <style>
+      #grid {
+        display: flex;
+        flex-wrap: wrap;
+        width: 500px;
+        height: 500px;
+      }
+      .square {
+        border: 1px solid black;
+        width: calc(100% / {{ n }});
+        height: calc(100% / {{ n }});
+        box-sizing: border-box;
+      }
+      .green {
+        background-color: green;
+      }
+      .red {
+        background-color: red;
+      }
+      .grey {
+        background-color: grey;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Grid World</h1>
+    <form action="/solve" method="post">
+      <input type="hidden" id="start" name="start">
+      <input type="hidden" id="end" name="end">
+      <input type="hidden" name="n" value="{{ n }}">
+      <div id="grid">
+        {% for i in range(n) %}
+          {% for j in range(n) %}
+            {% if (i, j) in [(0, 1), (1, 1), (2, 1)] %}
+              <div class="square grey" id="{{ i }},{{ j }}"></div>
+            {% else %}
+              <div class="square" id="{{ i }},{{ j }}"></div>
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+      </div>
+      <br>
+      <input type="submit" value="Solve">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      var start = '';
+      var end = '';
+      var obstacles = [];
+
+      // add click event listener to squares
+      $('.square').click(function() {
+        var id = $(this).attr('id');
+        if (start === '') {
+          $(this).addClass('green');
+          start = id;
+          $('#start').val(id);
+        } else if (end === '') {
+          $(this).addClass('red');
+          end = id;
+          $('#end').val(id);
+        } else if ($(this).hasClass('grey')) {
+          $(this).removeClass('grey');
+          obstacles.splice(obstacles.indexOf(id), 1);
+        } else {
+          $(this).addClass('grey');
+          obstacles.push(id);
+        }
+      });
+    </script>
+  </body>
+</html>

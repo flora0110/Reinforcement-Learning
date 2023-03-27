@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Policy and Q values table</title>
+</head>
+<body>
+
+	<h2>Policy Table</h2>
+	<table border="1">
+		{% for i in range(n) %}
+			<tr>
+				{% for j in range(n) %}
+					{% if [i, j, 'up'] in policy %}
+						<td>&uarr;</td>
+					{% elif [i, j, 'down'] in policy %}
+						<td>&darr;</td>
+					{% elif [i, j, 'left'] in policy %}
+						<td>&larr;</td>
+					{% elif [i, j, 'right'] in policy %}
+						<td>&rarr;</td>
+					{% else %}
+						<td>-</td>
+					{% endif %}
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+
+	<h2>Q values Table</h2>
+	<table border="1">
+		{% for i in range(3) %}
+			<tr>
+				{% for j in range(3) %}
+					<td>{{ q_values[i*3+j][0] }}</td>
+					<td>{{ q_values[i*3+j][1] }}</td>
+					<td>{{ q_values[i*3+j][2] }}</td>
+					<td>{{ q_values[i*3+j][3] }}</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+
+</body>
+</html>

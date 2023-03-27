@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Grid World</title>
+  </head>
+  <body>
+    <h1>Grid World</h1>
+    <form action="/square" method="get">
+      <label for="n">Enter the size of the grid (3-10):</label>
+      <input type="number" id="n" name="n" min="3" max="10" required>
+      <br>
+      <input type="submit" value="Create Grid">
+    </form>
+    <div id="solution"></div>
+    
+    <script>
+    function solve() {
+      var start = document.getElementById('start').value;
+      var end = document.getElementById('end').value;
+      var obstacles = [];
+      var obstacleCheckboxes = document.getElementsByName('obstacle');
+      for (var i = 0; i < obstacleCheckboxes.length; i++) {
+        if (obstacleCheckboxes[i].checked) {
+          obstacles.push(obstacleCheckboxes[i].value);
+        }
+      }
+      var n = document.getElementById('n').value;
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/solve');
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function() {
+        var response = JSON.parse(xhr.responseText);
+        var solutionDiv = document.getElementById('solution');
+        solutionDiv.innerHTML = '<p>Policy:</p><pre>' + response.policy + '</pre>' + '<p>Q values:</p><pre>' + response.q_values + '</pre>';
+      };
+      xhr.send('start=' + encodeURIComponent(start) + '&end=' + encodeURIComponent(end) + '&obstacle=' + encodeURIComponent(obstacles.join('&obstacle=')) + '&n=' + encodeURIComponent(n));
+    }
+    </script>
+
+  </body>
+</html>
