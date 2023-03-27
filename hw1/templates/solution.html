@@ -2,11 +2,40 @@
 <html>
 <head>
 	<title>Policy and Q values table</title>
+	<!-- 引入Bootstrap樣式 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<!-- 自定義CSS -->
+	<style>
+		.q-value {
+			display: inline-block;
+			margin-right: 10px;
+			padding: 5px 10px;
+			background-color: #e9ecef;
+			border: 1px solid #dee2e6;
+			border-radius: 3px;
+		}
+
+		.q-value-up {
+			border-top: none;
+		}
+
+		.q-value-down {
+			border-bottom: none;
+		}
+
+		.q-value-left {
+			border-left: none;
+		}
+
+		.q-value-right {
+			border-right: none;
+		}
+	</style>
 </head>
 <body>
 
 	<h2>Policy Table</h2>
-	<table border="1">
+	<table class="table table-bordered">
 		{% for i in range(n) %}
 			<tr>
 				{% for j in range(n) %}
@@ -27,18 +56,25 @@
 	</table>
 
 	<h2>Q values Table</h2>
-	<table border="1">
-		{% for i in range(3) %}
+	<table class="table table-bordered">
+		{% for i in range(n) %}
 			<tr>
-				{% for j in range(3) %}
-					<td>{{ q_values[i*3+j][0] }}</td>
-					<td>{{ q_values[i*3+j][1] }}</td>
-					<td>{{ q_values[i*3+j][2] }}</td>
-					<td>{{ q_values[i*3+j][3] }}</td>
+				{% for j in range(n) %}
+					<td>
+						<span class="q-value q-value-up">{{ q_values[i*n+j][0] }}</span>
+						<span class="q-value q-value-down">{{ q_values[i*n+j][2] }}</span>
+						<span class="q-value q-value-left">{{ q_values[i*n+j][1] }}</span>
+						<span class="q-value q-value-right">{{ q_values[i*n+j][3] }}</span>
+					</td>
 				{% endfor %}
 			</tr>
 		{% endfor %}
 	</table>
+
+	<!-- 引入Bootstrap的JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>
