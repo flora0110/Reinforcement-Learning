@@ -56,20 +56,38 @@
 	</table>
 
 	<h2>Q values Table</h2>
-	<table class="table table-bordered">
-		{% for i in range(n) %}
-			<tr>
-				{% for j in range(n) %}
-					<td>
-						<span class="q-value q-value-up">{{ q_values[i*n+j][0] }}</span>
-						<span class="q-value q-value-down">{{ q_values[i*n+j][2] }}</span>
-						<span class="q-value q-value-left">{{ q_values[i*n+j][1] }}</span>
-						<span class="q-value q-value-right">{{ q_values[i*n+j][3] }}</span>
-					</td>
-				{% endfor %}
-			</tr>
-		{% endfor %}
-	</table>
+        <table class="table table-bordered">
+            <tbody>
+                {% for i in range(n) %}
+                    <tr>
+                        {% for j in range(n) %}
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-muted">up:</td>
+                                            <td>{{ q_values[i*n+j][0] }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">down:</td>
+                                            <td>{{ q_values[i*n+j][1] }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">left:</td>
+                                            <td>{{ q_values[i*n+j][2] }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">right:</td>
+                                            <td>{{ q_values[i*n+j][3] }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
 	<!-- 引入Bootstrap的JavaScript -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
