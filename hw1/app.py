@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from qlearning import q_learning
 import random
+import numpy as np
+
 
 app = Flask(__name__)
 obstacles = []
@@ -23,11 +25,22 @@ def solve():
     end = request.form.get('end')
     #obstacles = request.form.getlist('obstacle')
     n = int(request.form.get('n'))
-    #policy, q_values = q_learning(n, start, end, obstacles)
-    policy = [[0,0, 'right'], [0,1,'left'], [0,2,'down'],[1,2,'down']]
-    q_values = [[-1,0,0,-1],[-1,0,0,0],[-1,-1,1,0],[0,-1,1,0],[-1,0,0,-1],[-1,0,0,0],[-1,-1,1,0],[0,-1,1,0],[0,-1,1,0]]
+
+    # 生成一個 n*n 的空字串陣列
+    grid = [['' for j in range(n)] for i in range(n)]
+    # 將 obstacles 中的位置標記為 'obstacle'
+    for obstacle in obstacles:
+        i, j = obstacle
+        grid[i][j] = 'obstacle'
+
+    new_start = [int(start[0]),int(start[2])]
+    new_end = [int(end[0]),int(end[2])]
+    policy, q_values = q_learning(grid, new_start, new_end)
+
+    #policy = [[0,0, 'right'], [0,1,'right'], [0,2,'down'],[1,2,'down']]
+    #q_values = [[-1,0,0,-1],[-1,0,0,0],[-1,-1,1,0],[0,-1,1,0],[-1,0,0,-1],[-1,0,0,0],[-1,-1,1,0],[0,-1,1,0],[0,-1,1,0]]
 
 
-    return render_template('solution.html', policy=policy, q_values=q_values,n=n,start=start,end=end,obstacles=obstacles)
+    return render_template('solution.html', policy=policy, q_values=q_values,n=n,start=new_start,end=new_end,obstacles=obstacles)
 if __name__ == '__main__':
     app.run(debug=True)

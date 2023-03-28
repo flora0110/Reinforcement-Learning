@@ -17,10 +17,12 @@
 
 		.q-value-up {
 			border-top: none;
+            background-color: green;
 		}
 
 		.q-value-down {
 			border-bottom: none;
+            background-color: red;
 		}
 
 		.q-value-left {
@@ -39,16 +41,49 @@
 		{% for i in range(n) %}
 			<tr>
 				{% for j in range(n) %}
-					{% if [i, j, 'up'] in policy %}
-						<td>&uarr;</td>
-					{% elif [i, j, 'down'] in policy %}
-						<td>&darr;</td>
-					{% elif [i, j, 'left'] in policy %}
-						<td>&larr;</td>
-					{% elif [i, j, 'right'] in policy %}
-						<td>&rarr;</td>
+                    
+                    {% if (i,j) in obstacles %}
+                        <td style="background-color: gray;">&#x2716;</td>
+                    {% elif [i, j, 'up'] in policy[0] %}
+                        {% if i == start[0] and j == start[1] %}
+                            <td style="background-color: green;">&uarr;</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td style="background-color: red;">&uarr;</td>
+                        {% else %}
+						    <td>&uarr;</td>
+                        {% endif %}
+					{% elif [i, j, 'down'] in policy[0] %}
+                        {% if i == start[0] and j == start[1] %}
+                            <td style="background-color: green;">&darr;</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td style="background-color: red;">&darr;</td>
+                        {% else %}
+						    <td>&darr;</td>
+                        {% endif %}
+					{% elif [i, j, 'left'] in policy[0] %}
+                        {% if i == start[0] and j == start[1] %}
+                            <td style="background-color: green;">&larr;</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td style="background-color: red;">&larr;</td>
+                        {% else %}
+						    <td>&larr;</td>
+                        {% endif %}
+					{% elif [i, j, 'right'] in policy[0] %}
+                        {% if i == start[0] and j == start[1] %}
+                            <td style="background-color: green;">&rarr;</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td style="background-color: red;">&rarr;</td>
+                        {% else %}
+						    <td>&rarr;</td>
+                        {% endif %}
 					{% else %}
-						<td>-</td>
+                        {% if i == start[0] and j == start[1] %}
+                            <td style="background-color: green;">-</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td style="background-color: red;">-</td>
+                        {% else %}
+                            <td>-</td>
+						{% endif %}
 					{% endif %}
 				{% endfor %}
 			</tr>
@@ -89,8 +124,13 @@
             </tbody>
         </table>
         <div>start is {{ start }}</div>
+        <div>start is {{ start[0] }}</div>
+        <div>start is {{ start[1] }}</div>
+        <div>start is {{ start[2] }}</div>
         <div>end is {{ end }}</div>
         <div>obstacles is {{ obstacles }}</div>
+        <div>policy is {{ policy }}</div>
+        
 
 
 	<!-- 引入Bootstrap的JavaScript -->
