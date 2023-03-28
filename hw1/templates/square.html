@@ -36,7 +36,7 @@
       <div id="grid">
         {% for i in range(n) %}
           {% for j in range(n) %}
-            {% if (i, j) in [(0, 1), (1, 1), (2, 1)] %}
+            {% if (i, j) in obstacles %}
               <div class="square grey" id="{{ i }},{{ j }}"></div>
             {% else %}
               <div class="square" id="{{ i }},{{ j }}"></div>
@@ -51,8 +51,7 @@
     <script>
       var start = '';
       var end = '';
-      var obstacles = [];
-
+      
       // add click event listener to squares
       $('.square').click(function() {
         var id = $(this).attr('id');
@@ -64,14 +63,9 @@
           $(this).addClass('red');
           end = id;
           $('#end').val(id);
-        } else if ($(this).hasClass('grey')) {
-          $(this).removeClass('grey');
-          obstacles.splice(obstacles.indexOf(id), 1);
-        } else {
-          $(this).addClass('grey');
-          obstacles.push(id);
-        }
+        } 
       });
     </script>
+    <div>obstacles is {{ obstacles }}</div>
   </body>
 </html>
