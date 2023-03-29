@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grid Table Example</title>
+	<style>
+		#grid {
+			display: flex;
+			flex-wrap: wrap;
+			width: 500px;
+			height: 500px;
+		}
+		.square {
+			border: 1px solid black;
+			width: 20px;
+			height: 20px;
+			box-sizing: border-box;
+		}
+	</style>
+</head>
+<body>
+	<table id="grid">
+		{% for i in range(5) %}
+			<tr>
+			{% for j in range(5) %}
+				<td class="square"></td>
+			{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+    <h2>Policy Table</h2>
+	<table id="grid">
+		{% for i in range(3) %}
+			<tr>
+				{% for j in range(3) %}
+                    
+                    {% if (i,j) in obstacles %}
+                        <td class="square" style="background-color: gray;">&#x2716;</td>
+                    {% elif [i, j, 'up'] in policy[0] %}
+                        {% if i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;">&uarr;</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td class="square" style="background-color: red;">&uarr;</td>
+                        {% else %}
+						    <td class="square">&uarr;</td>
+                        {% endif %}
+					{% elif [i, j, 'down'] in policy[0] %}
+                        {% if i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;">&darr;</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td class="square" style="background-color: red;">&darr;</td>
+                        {% else %}
+						    <td class="square">&darr;</td>
+                        {% endif %}
+					{% elif [i, j, 'left'] in policy[0] %}
+                        {% if i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;">&larr;</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td class="square" style="background-color: red;">&larr;</td>
+                        {% else %}
+						    <td class="square">&larr;</td>
+                        {% endif %}
+					{% elif [i, j, 'right'] in policy[0] %}
+                        {% if i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;">&rarr;</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td class="square" style="background-color: red;">&rarr;</td>
+                        {% else %}
+						    <td class="square">&rarr;</td>
+                        {% endif %}
+					{% else %}
+                        {% if i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;">-</td>
+                        {% elif i == end[0] and j == end[1] %}
+                            <td class="square" style="background-color: red;">-</td>
+                        {% else %}
+                            <td class="square">-</td>
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+			</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from qlearning import q_learning
+from qlearning3 import q_learning
 import random
 import numpy as np
 
@@ -39,8 +39,12 @@ def solve():
 
     #policy = [[0,0, 'right'], [0,1,'right'], [0,2,'down'],[1,2,'down']]
     #q_values = [[-1,0,0,-1],[-1,0,0,0],[-1,-1,1,0],[0,-1,1,0],[-1,0,0,-1],[-1,0,0,0],[-1,-1,1,0],[0,-1,1,0],[0,-1,1,0]]
-
-
-    return render_template('solution.html', policy=policy, q_values=q_values,n=n,start=new_start,end=new_end,obstacles=obstacles)
+    return render_template('solution.html', policy=policy, q_values=q_values,n=n,start=new_start,end=new_end,obstacles=obstacles,grid = grid)
+@app.route('/test')
+def test():
+    start = (0,0)
+    end = (2,2)
+    policy = [[0,0, 'right'], [0,1,'right'], [0,2,'down'],[1,2,'down']]
+    return render_template("test.html", policy=policy,start=start,end=end)
 if __name__ == '__main__':
     app.run(debug=True)

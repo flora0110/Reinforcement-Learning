@@ -6,8 +6,28 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<!-- 自定義CSS -->
 	<style>
+        #grid {
+			display: flex;
+			flex-wrap: wrap;
+			width: 800px;
+			height: 800px;
+		}
+		.square {
+            position: relative; /* 使文字定位於格子內 */
+			border: 1px solid black;
+			width: 100px;
+			height: 100px;
+			box-sizing: border-box;
+		}
+        .square span {
+            position: absolute;
+            top: 50%; /* 垂直置中 */
+            left: 50%; /* 水平置中 */
+            transform: translate(-50%, -50%); /* 靠左上方定位 */
+            font-size: 50px; /* 字體大小設為格子高度的一半 */
+        }
 		.q-value {
-			display: inline-block;
+			display: grid;
 			margin-right: 10px;
 			padding: 5px 10px;
 			background-color: #e9ecef;
@@ -37,54 +57,61 @@
 <body>
 
 	<h2>Policy Table</h2>
-	<table class="table table-bordered">
+	<table id="grid">
 		{% for i in range(n) %}
 			<tr>
 				{% for j in range(n) %}
-                    
-                    {% if (i,j) in obstacles %}
-                        <td style="background-color: gray;">&#x2716;</td>
-                    {% elif [i, j, 'up'] in policy[0] %}
-                        {% if i == start[0] and j == start[1] %}
-                            <td style="background-color: green;">&uarr;</td>
+                    {% if [i, j, 'up'] in policy[0] %}
+                        {% if (i,j) in obstacles %}
+                            <td class="square" style="background-color: gray;"><span>&uarr;</span></td>
+                        {% elif i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;"><span>&uarr;</span></td>
                         {% elif i == end[0] and j == end[1] %}
-                            <td style="background-color: red;">&uarr;</td>
+                            <td class="square" style="background-color: red;"><span>&uarr;</span></td>
                         {% else %}
-						    <td>&uarr;</td>
+                            <td class="square"><span>&uarr;</span></td>
                         {% endif %}
-					{% elif [i, j, 'down'] in policy[0] %}
-                        {% if i == start[0] and j == start[1] %}
-                            <td style="background-color: green;">&darr;</td>
+                    {% elif [i, j, 'down'] in policy[0] %}
+                        {% if (i,j) in obstacles %}
+                            <td class="square" style="background-color: gray;"><span>&darr;</span></td>
+                        {% elif i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;"><span>&darr;</span></td>
                         {% elif i == end[0] and j == end[1] %}
-                            <td style="background-color: red;">&darr;</td>
+                            <td class="square" style="background-color: red;"><span>&darr;</span></td>
                         {% else %}
-						    <td>&darr;</td>
+                            <td class="square"><span>&darr;</span></td>
                         {% endif %}
-					{% elif [i, j, 'left'] in policy[0] %}
-                        {% if i == start[0] and j == start[1] %}
-                            <td style="background-color: green;">&larr;</td>
+                    {% elif [i, j, 'left'] in policy[0] %}
+                        {% if (i,j) in obstacles %}
+                            <td class="square" style="background-color: gray;"><span>&larr;</span></td>
+                        {% elif i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;"><span>&larr;</span></td>
                         {% elif i == end[0] and j == end[1] %}
-                            <td style="background-color: red;">&larr;</td>
+                            <td class="square" style="background-color: red;"><span>&larr;</span></td>
                         {% else %}
-						    <td>&larr;</td>
+                            <td class="square"><span>&larr;</span></td>
                         {% endif %}
-					{% elif [i, j, 'right'] in policy[0] %}
-                        {% if i == start[0] and j == start[1] %}
-                            <td style="background-color: green;">&rarr;</td>
+                    {% elif [i, j, 'right'] in policy[0] %}
+                        {% if (i,j) in obstacles %}
+                            <td class="square" style="background-color: gray;"><span>&rarr;</span></td>
+                        {% elif i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;"><span>&rarr;</span></td>
                         {% elif i == end[0] and j == end[1] %}
-                            <td style="background-color: red;">&rarr;</td>
+                            <td class="square" style="background-color: red;"><span>&rarr;</span></td>
                         {% else %}
-						    <td>&rarr;</td>
+                            <td class="square"><span>&rarr;</span></td>
                         {% endif %}
-					{% else %}
-                        {% if i == start[0] and j == start[1] %}
-                            <td style="background-color: green;">-</td>
+                    {% else %}
+                        {% if (i,j) in obstacles %}
+                            <td class="square" style="background-color: gray;"></td>
+                        {% elif i == start[0] and j == start[1] %}
+                            <td class="square" style="background-color: green;"></td>
                         {% elif i == end[0] and j == end[1] %}
-                            <td style="background-color: red;">-</td>
+                            <td class="square" style="background-color: red;"></td>
                         {% else %}
-                            <td>-</td>
-						{% endif %}
-					{% endif %}
+                            <td class="square"></td>
+                        {% endif %}
+                    {% endif %}
 				{% endfor %}
 			</tr>
 		{% endfor %}
@@ -130,6 +157,8 @@
         <div>end is {{ end }}</div>
         <div>obstacles is {{ obstacles }}</div>
         <div>policy is {{ policy }}</div>
+        <div>grid is {{ grid }}</div>
+        <div>q_values is {{ q_values }}</div>
         
 
 

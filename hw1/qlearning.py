@@ -1,5 +1,5 @@
 import numpy as np
-def q_learning(grid, start, end, alpha=0.1, gamma=0.9, epsilon=0.1, num_episodes=10):
+def q_learning(grid, start, end, alpha=0.1, gamma=0.9, epsilon=0.1, num_episodes=1000):
     q_table = np.zeros((len(grid), len(grid[0]), 4))
     print("len of grid: ")
     print(len(grid))
