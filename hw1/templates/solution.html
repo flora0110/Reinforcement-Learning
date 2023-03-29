@@ -61,7 +61,7 @@
 		{% for i in range(n) %}
 			<tr>
 				{% for j in range(n) %}
-                    {% if [i, j, 'up'] in policy[0] %}
+                    {% if [i, j, 'up'] in policy %}
                         {% if (i,j) in obstacles %}
                             <td class="square" style="background-color: gray;"><span>&uarr;</span></td>
                         {% elif i == start[0] and j == start[1] %}
@@ -71,7 +71,7 @@
                         {% else %}
                             <td class="square"><span>&uarr;</span></td>
                         {% endif %}
-                    {% elif [i, j, 'down'] in policy[0] %}
+                    {% elif [i, j, 'down'] in policy %}
                         {% if (i,j) in obstacles %}
                             <td class="square" style="background-color: gray;"><span>&darr;</span></td>
                         {% elif i == start[0] and j == start[1] %}
@@ -81,7 +81,7 @@
                         {% else %}
                             <td class="square"><span>&darr;</span></td>
                         {% endif %}
-                    {% elif [i, j, 'left'] in policy[0] %}
+                    {% elif [i, j, 'left'] in policy %}
                         {% if (i,j) in obstacles %}
                             <td class="square" style="background-color: gray;"><span>&larr;</span></td>
                         {% elif i == start[0] and j == start[1] %}
@@ -91,7 +91,7 @@
                         {% else %}
                             <td class="square"><span>&larr;</span></td>
                         {% endif %}
-                    {% elif [i, j, 'right'] in policy[0] %}
+                    {% elif [i, j, 'right'] in policy %}
                         {% if (i,j) in obstacles %}
                             <td class="square" style="background-color: gray;"><span>&rarr;</span></td>
                         {% elif i == start[0] and j == start[1] %}
